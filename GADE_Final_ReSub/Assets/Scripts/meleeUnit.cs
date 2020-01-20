@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class meleeUnit : unit {
 
@@ -22,6 +23,7 @@ public class meleeUnit : unit {
                 gameObject.tag = "team 2";
                 break;
         }
+        healthBar = GetComponentsInChildren<Image>()[1];
 	}
 	
 	// Update is called once per frame

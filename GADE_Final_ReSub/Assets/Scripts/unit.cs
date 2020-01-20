@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class unit : MonoBehaviour {
+    [SerializeField] protected Image healthBar;
     [SerializeField] protected int team;
     [SerializeField] protected float spd;
     [SerializeField] protected Material[] mat;
@@ -10,6 +12,8 @@ public abstract class unit : MonoBehaviour {
     [SerializeField] protected int maxHp;
     [SerializeField] protected int atk;
     [SerializeField] protected int range;
+    [SerializeField] int duration = 1;
+    [SerializeField] float timer = 0;
 
     public int Hp
     {
@@ -79,6 +83,13 @@ public abstract class unit : MonoBehaviour {
 		if (!IsInRange(GetClosestUnit()))
         {
             transform.position = Vector3.MoveTowards(transform.position, GetClosestUnit().transform.position, spd * Time.deltaTime);
+        }
+        healthBar.fillAmount = (float)hp / maxHp;
+        timer += Time.deltaTime;
+        if (timer >= duration)
+        {
+            hp--;
+            timer = 0;
         }
 	}
 
