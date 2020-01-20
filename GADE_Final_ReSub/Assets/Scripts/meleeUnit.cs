@@ -7,7 +7,7 @@ public class meleeUnit : unit {
 
 	// Use this for initialization
 	void Start () {
-        hp = 10;
+        hp = 40;
         maxHp = hp;
         atk = 2;
         range = 1;
@@ -24,10 +24,5 @@ public class meleeUnit : unit {
                 break;
         }
         healthBar = GetComponentsInChildren<Image>()[1];
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

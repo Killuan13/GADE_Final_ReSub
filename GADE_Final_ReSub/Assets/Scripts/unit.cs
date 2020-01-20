@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public abstract class unit : MonoBehaviour {
     [SerializeField] protected Image healthBar;
@@ -12,8 +13,7 @@ public abstract class unit : MonoBehaviour {
     [SerializeField] protected int maxHp;
     [SerializeField] protected int atk;
     [SerializeField] protected int range;
-    [SerializeField] int duration = 1;
-    [SerializeField] float timer = 0;
+    
 
     public int Hp
     {
@@ -81,16 +81,12 @@ public abstract class unit : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!IsInRange(GetClosestUnit()))
-        {
+        {    
             transform.position = Vector3.MoveTowards(transform.position, GetClosestUnit().transform.position, spd * Time.deltaTime);
         }
         healthBar.fillAmount = (float)hp / maxHp;
-        timer += Time.deltaTime;
-        if (timer >= duration)
-        {
-            hp--;
-            timer = 0;
-        }
+        Attack();
+        
 	}
 
     protected bool IsInRange(GameObject Enemy)
@@ -108,13 +104,40 @@ public abstract class unit : MonoBehaviour {
     {
         GameObject unit = null;
         GameObject[] units = null;
+        GameObject[] wizards = null;
+
         switch (team)
         {
             case 1:
-                GameObject.FindGameObjectsWithTag("team 2");
+                units = GameObject.FindGameObjectsWithTag("team 2");
+                wizards = GameObject.FindGameObjectsWithTag("team 3");
+                int tempSize = units.Length;
+                Array.Resize(ref units, units.Length + wizards.Length);
+                for (int i = tempSize; i < units.Length; i++)
+                {
+                    units[i] = wizards[i - tempSize];
+                }
+
                 break;
             case 2:
-                GameObject.FindGameObjectsWithTag("team 1");
+                units = GameObject.FindGameObjectsWithTag("team 1");
+                wizards = GameObject.FindGameObjectsWithTag("team 3");
+                tempSize = units.Length;
+                Array.Resize(ref units, units.Length + wizards.Length);
+                for (int i = tempSize; i < units.Length; i++)
+                {
+                    units[i] = wizards[i - tempSize];
+                }
+                break;
+            case 3:
+                units = GameObject.FindGameObjectsWithTag("team 1");
+                wizards = GameObject.FindGameObjectsWithTag("team 2");
+                tempSize = units.Length;
+                Array.Resize(ref units, units.Length + wizards.Length);
+                for (int i = tempSize; i < units.Length; i++)
+                {
+                    units[i] = wizards[i - tempSize];
+                }
                 break;
         }
         float distance = 9999;
@@ -128,5 +151,24 @@ public abstract class unit : MonoBehaviour {
             }
         }
         return unit;
-    } 
+    }
+    protected void Attack()
+    {
+        if (IsInRange(GetClosestUnit()))
+        {
+            if (GetClosestUnit().GetComponent<unit>())
+            {
+                GetClosestUnit().GetComponent<unit>().hp -= atk;
+            }
+
+            if (GetClosestUnit().GetComponent<building>())
+            {
+                GetClosestUnit().GetComponent<building>().Hp -= atk;
+            }
+        }
+        if (hp <= 0 || healthBar.fillAmount == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

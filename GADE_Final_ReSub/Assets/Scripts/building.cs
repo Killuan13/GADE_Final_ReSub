@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class building : MonoBehaviour {
     [SerializeField] protected int hp;
     [SerializeField] protected int maxHp;
     [SerializeField] protected int bTeam;
     [SerializeField] protected Material[] bMat;
-
+    [SerializeField] protected Image healthBar;
 
     public int Hp 
     {
@@ -41,6 +43,11 @@ public class building : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        healthBar.fillAmount = (float)hp / maxHp;
+        hp -= GetComponent<unit>().Atk;
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
 	}
 }
