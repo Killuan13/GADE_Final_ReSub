@@ -70,12 +70,51 @@ public abstract class unit : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
-		
+    void Start ()
+    {
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (!IsInRange(GetClosestUnit()))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, GetClosestUnit().transform.position, spd * Time.deltaTime);
+        }
 	}
+
+    protected bool IsInRange(GameObject Enemy)
+    {
+        bool returnVal = false;
+        if (Vector3.Distance(transform.position, Enemy.transform.position) <= range)
+        {
+            return true;
+        }
+        else return returnVal;
+    }
+
+    protected GameObject GetClosestUnit()
+    {
+        GameObject unit = null;
+        GameObject[] units = null;
+        switch (team)
+        {
+            case 1:
+                GameObject.FindGameObjectsWithTag("team 2");
+                break;
+            case 2:
+                GameObject.FindGameObjectsWithTag("team 1");
+                break;
+        }
+        float distance = 9999;
+        foreach (GameObject temp in units)
+        {
+            float tempDist = Vector3.Distance(transform.position, temp.transform.position);
+            if (tempDist <= distance)
+            {
+                distance = tempDist;
+                unit = temp;
+            }
+        }
+        return unit;
+    } 
 }

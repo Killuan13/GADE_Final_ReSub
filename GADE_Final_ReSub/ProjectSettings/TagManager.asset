@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - team 1
+  - team 2
+  - team 3
+  - resource
+  - ground
   layers:
   - Default
   - TransparentFX

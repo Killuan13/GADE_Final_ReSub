@@ -106,7 +106,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   team: 0
   spd: 0
-  mat: []
+  mat:
+  - {fileID: 2100000, guid: 80dc53128c3521f4eabbab0351b7a4e1, type: 2}
+  - {fileID: 2100000, guid: 8342d7ac0cf174b49ae70ca4de2d0195, type: 2}
   hp: 0
   maxHp: 0
   atk: 0
