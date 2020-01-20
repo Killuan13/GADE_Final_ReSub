@@ -87,9 +87,10 @@ public abstract class unit : MonoBehaviour {
         bool returnVal = false;
         if (Vector3.Distance(transform.position, Enemy.transform.position) <= range)
         {
-            return true;
+            returnVal = true;
         }
-        else return returnVal;
+        else returnVal = false;
+        return returnVal;
     }
 
     protected GameObject GetClosestUnit()
