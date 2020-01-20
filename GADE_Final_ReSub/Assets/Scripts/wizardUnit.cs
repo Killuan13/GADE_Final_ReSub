@@ -17,9 +17,4 @@ public class wizardUnit : unit {
         gameObject.tag = "team 3";
         healthBar = GetComponentsInChildren<Image>()[1];
     }
-
-    void AOE()
-    {
-        
-    }
 }

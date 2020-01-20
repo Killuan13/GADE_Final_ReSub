@@ -73,11 +73,6 @@ public abstract class unit : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
-    void Start ()
-    {
-	}
-	
 	// Update is called once per frame
 	void Update () {
 		if (!IsInRange(GetClosestUnit()))
@@ -86,7 +81,6 @@ public abstract class unit : MonoBehaviour {
         }
         healthBar.fillAmount = (float)hp / maxHp;
         Attack();
-        
 	}
 
     protected bool IsInRange(GameObject Enemy)
@@ -166,7 +160,7 @@ public abstract class unit : MonoBehaviour {
                 GetClosestUnit().GetComponent<building>().Hp -= atk;
             }
         }
-        if (hp <= 0 || healthBar.fillAmount == 0)
+        if (hp <= 0)
         {
             Destroy(gameObject);
         }

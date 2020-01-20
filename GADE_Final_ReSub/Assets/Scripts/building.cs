@@ -10,6 +10,7 @@ public class building : MonoBehaviour {
     [SerializeField] protected int bTeam;
     [SerializeField] protected Material[] bMat;
     [SerializeField] protected Image healthBar;
+    [SerializeField] protected int range;
 
     public int Hp 
     {
@@ -36,13 +37,20 @@ public class building : MonoBehaviour {
             return bTeam;
         }
     }
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public int Range
+    {
+        get
+        {
+            return range;
+        }
+        set
+        {
+            range = value;
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
         healthBar.fillAmount = (float)hp / maxHp;
         hp -= GetComponent<unit>().Atk;
         if (hp <= 0)
